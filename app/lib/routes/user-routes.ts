@@ -1,21 +1,20 @@
 import { Request, Response } from "express";
 
-import { TasksController } from "../controllers/taskController";
+import { UsersController } from "../controllers/usersController";
 
 export class Routes {
-  public taskController: TasksController = new TasksController();
+  public usersController: UsersController = new UsersController();
 
   public routes(app): void {
-    // Get all tasks
-    app.route("/tasks")
-      .get(this.taskController.getTasks)
-      .delete(this.taskController.deleteAllTasks);
-    app.route("/task").post(this.taskController.addNewTask);
-    app.route("/task/:taskId")
-      .delete(this.taskController.deleteTask)
-      .post(this.taskController.addNewTask);
-    app.route("/task/update")
-      .put(this.taskController.updateTask);
+
+    app.route("/users")
+      .get(this.usersController.getUsers);
+
+    // app.route("/user").post(this.usersController.addNewUser);
+
+    // app.route("/user/:userId")
+    //   .delete(this.usersController.deleteUser)
+    //   .post(this.usersController.addNewUser);
 
     app.route("/").get((req: Request, res: Response) => {
       res.status(200).send({
@@ -31,26 +30,26 @@ export class Routes {
       });
     // Task
     app
-      .route("/tasks")
+      .route("/users")
       // GET endpoint
       .get((req: Request, res: Response) => {
-        // Get all tasks
+        // Get all users
         res.status(200).send({
           message: "GET request successfulll"
         });
       })
       .delete((req: Request, res: Response) => {
-        // Delete a task
+        // Delete a user
         res.status(200).send({
           message: "DELETE request successfulll"
         });
       });
-    app
-      .route("/task/update")
-      .get((req: Request, res: Response) => {
-        res.status(200).send({
-          message: "GET request successfulll"
-        });
-      });
+    // app
+    //   .route("/task/update")
+    //   .get((req: Request, res: Response) => {
+    //     res.status(200).send({
+    //       message: "GET request successfulll"
+    //     });
+    //   });
   }
 }
