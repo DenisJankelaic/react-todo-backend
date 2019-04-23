@@ -36,55 +36,53 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var mongoose = require("mongoose");
-var user_data_model_1 = require("../models/user-data-model");
-// import { WeatherSchema } from "../models/weather-schema";
-var User = mongoose.model("users", user_data_model_1.UserSchema);
-// const weather = mongoose.model("cities", WeatherSchema);
-var UsersController = /** @class */ (function () {
-    function UsersController() {
+var project_data_model_1 = require("../models/project-data-model");
+var Project = mongoose.model("projects", project_data_model_1.ProjectSchema);
+var ProjectsController = /** @class */ (function () {
+    function ProjectsController() {
     }
-    UsersController.prototype.getUsers = function (req, res) {
-        User.find({}, function (err, user) {
+    ProjectsController.prototype.getProjects = function (req, res) {
+        Project.find({}, function (err, project) {
             if (err) {
                 res.send(err);
             }
-            res.json(user);
+            res.json(project);
         });
     };
-    UsersController.prototype.getUserById = function (req, res) {
-        User.find({ _id: req.params.userId }, function (err, user) {
+    ProjectsController.prototype.getProjectById = function (req, res) {
+        Project.find({ _id: req.params.projectId }, function (err, project) {
             if (err) {
                 res.send(err);
             }
-            res.json(user);
+            res.json(project);
         });
     };
-    UsersController.prototype.addNewUser = function (req, res) {
-        var newUser = new User(req.body);
-        console.log(newUser);
-        newUser.save(function (err, user) {
+    ProjectsController.prototype.addNewProject = function (req, res) {
+        var newProject = new Project(req.body);
+        console.log(newProject);
+        newProject.save(function (err, project) {
             if (err) {
                 res.send(err);
             }
-            res.json(user);
+            res.json(project);
         });
     };
-    UsersController.prototype.deleteUser = function (req, res) {
+    ProjectsController.prototype.deleteProject = function (req, res) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
-                User.remove({ _id: req.params.userId }, function (err, user) {
-                    console.log(req.params.userId);
+                Project.remove({ _id: req.params.ProjectId }, function (err, project) {
+                    console.log(req.params.ProjectId);
                     if (err) {
                         res.send(err);
                     }
-                    console.log(user);
-                    res.json({ message: "Successfully deleted user!" });
+                    console.log(project);
+                    res.json({ message: "Successfully deleted Project!" });
                 });
                 return [2 /*return*/];
             });
         });
     };
-    return UsersController;
+    return ProjectsController;
 }());
-exports.UsersController = UsersController;
-//# sourceMappingURL=usersController.js.map
+exports.ProjectsController = ProjectsController;
+//# sourceMappingURL=projects-controller.js.map

@@ -2,12 +2,12 @@ import * as express from "express";
 import * as bodyParser from "body-parser";
 import * as mongoose from "mongoose";
 
-import { Routes } from "./routes/user-routes";
+import { UserRoutes } from "./routes/user-routes";
 import { mongoUrl } from "./shared/db-url";
 
 class App {
   public app: express.Application;
-  public routePrv: Routes = new Routes();
+  public routePrv: UserRoutes = new UserRoutes();
 
   constructor() {
     this.app = express();

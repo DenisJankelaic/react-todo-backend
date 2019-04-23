@@ -1,17 +1,17 @@
 import { Request, Response } from "express";
 
-import { UsersController } from "../controllers/users-controller";
+import { ProjectsController } from "../controllers/projects-controller";
 
-export class UserRoutes {
-  public usersController: UsersController = new UsersController();
+export class ProjectRoutes {
+  public projectsController: ProjectsController = new ProjectsController();
 
   public routes(app): void {
-    app.route("/users").get(this.usersController.getUsers);
-    app.route("/user").post(this.usersController.addNewUser);
+    app.route("/projects").get(this.projectsController.getProjects);
+    app.route("/user").post(this.projectsController.addNewProject);
     app
       .route("/user/:userId")
-      .delete(this.usersController.deleteUser)
-      .get(this.usersController.getUserById);
+      .delete(this.projectsController.deleteProject)
+      .get(this.projectsController.getProjectById);
 
     app
       .route("/")
@@ -22,17 +22,17 @@ export class UserRoutes {
       })
       // POST endpoint
       .post((req: Request, res: Response) => {
-        // Create new task
+        // Create new project
         res.status(200).send({
           message: "POST request successfulll"
         });
       });
-    // Task
+    // project
     app
       .route("/users")
       // GET endpoint
       .get((req: Request, res: Response) => {
-        // Get all users
+        // Get all project
         res.status(200).send({
           message: "GET request successfulll"
         });

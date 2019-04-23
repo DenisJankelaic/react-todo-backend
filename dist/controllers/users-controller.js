@@ -37,9 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var mongoose = require("mongoose");
 var user_data_model_1 = require("../models/user-data-model");
-// import { WeatherSchema } from "../models/weather-schema";
 var User = mongoose.model("users", user_data_model_1.UserSchema);
-// const weather = mongoose.model("cities", WeatherSchema);
 var UsersController = /** @class */ (function () {
     function UsersController() {
     }
@@ -87,4 +85,4 @@ var UsersController = /** @class */ (function () {
     return UsersController;
 }());
 exports.UsersController = UsersController;
-//# sourceMappingURL=usersController.js.map
+//# sourceMappingURL=users-controller.js.map

@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var users_controller_1 = require("../controllers/users-controller");
+var projects_controller_1 = require("../controllers/projects-controller");
 var Routes = /** @class */ (function () {
     function Routes() {
-        this.usersController = new users_controller_1.UsersController();
+        this.projectsController = new projects_controller_1.ProjectsController();
     }
     Routes.prototype.routes = function (app) {
-        app.route("/users").get(this.usersController.getUsers);
-        app.route("/user").post(this.usersController.addNewUser);
+        app.route("/projects").get(this.projectsController.getProjects);
+        app.route("/user").post(this.projectsController.addNewProject);
         app
             .route("/user/:userId")
-            .delete(this.usersController.deleteUser)
-            .get(this.usersController.getUserById);
+            .delete(this.projectsController.deleteProject)
+            .get(this.projectsController.getProjectById);
         app
             .route("/")
             .get(function (req, res) {
@@ -21,17 +21,17 @@ var Routes = /** @class */ (function () {
         })
             // POST endpoint
             .post(function (req, res) {
-            // Create new task
+            // Create new project
             res.status(200).send({
                 message: "POST request successfulll"
             });
         });
-        // Task
+        // project
         app
             .route("/users")
             // GET endpoint
             .get(function (req, res) {
-            // Get all users
+            // Get all project
             res.status(200).send({
                 message: "GET request successfulll"
             });
@@ -53,4 +53,4 @@ var Routes = /** @class */ (function () {
     return Routes;
 }());
 exports.Routes = Routes;
-//# sourceMappingURL=user-routes.js.map
+//# sourceMappingURL=project-routes.js.map

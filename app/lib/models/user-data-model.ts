@@ -3,19 +3,24 @@ import * as mongoose from "mongoose";
 const Schema = mongoose.Schema;
 
 export const UserSchema = new Schema({
-  id: {
-    type: String
+  _id: {
+    type: String,
+    required: true
   },
   userName: {
-    type: String
+    type: String,
+    required: true
   },
   login: {
-    type: String
+    type: String,
+    required: true
   },
   password: {
-    type: String
+    type: String,
+    required: true
   },
   role: {
-    type: String
+    type: String,
+    required: true
   }
 });
