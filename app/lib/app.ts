@@ -2,12 +2,12 @@ import * as express from "express";
 import * as bodyParser from "body-parser";
 import * as mongoose from "mongoose";
 
-import { UserRoutes } from "./routes/user-routes";
+import { Routes } from "./routes/routes";
 import { mongoUrl } from "./shared/db-url";
 
 class App {
   public app: express.Application;
-  public routePrv: UserRoutes = new UserRoutes();
+  public routePrv: Routes = new Routes();
 
   constructor() {
     this.app = express();
@@ -20,7 +20,7 @@ class App {
     mongoose.Promise = global.Promise;
     mongoose
       .connect(mongoUrl, { useNewUrlParser: true })
-      .then(() => console.log("Connected to DB."))
+      .then(() => console.log("Connected to MongoDB."))
       .catch(err => {
         throw err;
       });

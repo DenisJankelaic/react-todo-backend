@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var projects_controller_1 = require("../controllers/projects-controller");
-var Routes = /** @class */ (function () {
-    function Routes() {
+var ProjectRoutes = /** @class */ (function () {
+    function ProjectRoutes() {
         this.projectsController = new projects_controller_1.ProjectsController();
     }
-    Routes.prototype.routes = function (app) {
+    ProjectRoutes.prototype.routes = function (app) {
         app.route("/projects").get(this.projectsController.getProjects);
         app.route("/user").post(this.projectsController.addNewProject);
         app
@@ -50,7 +50,7 @@ var Routes = /** @class */ (function () {
         //     });
         //   });
     };
-    return Routes;
+    return ProjectRoutes;
 }());
-exports.Routes = Routes;
+exports.ProjectRoutes = ProjectRoutes;
 //# sourceMappingURL=project-routes.js.map

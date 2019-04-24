@@ -45,13 +45,6 @@ var Routes = /** @class */ (function () {
                 message: "DELETE request successfulll"
             });
         });
-        // app
-        //   .route("/task/update")
-        //   .get((req: Request, res: Response) => {
-        //     res.status(200).send({
-        //       message: "GET request successfulll"
-        //     });
-        //   });
         //PROJECTS
         app.route("/projects").get(this.projectsController.getProjects);
         app.route("/project").post(this.projectsController.addNewProject);
@@ -59,6 +52,7 @@ var Routes = /** @class */ (function () {
             .route("/project/:projectId")
             .delete(this.projectsController.deleteProject)
             .get(this.projectsController.getProjectById);
+        app.route("/project/update").put(this.projectsController.updateProject);
         app
             .route("/")
             .get(function (req, res) {
@@ -93,4 +87,4 @@ var Routes = /** @class */ (function () {
     return Routes;
 }());
 exports.Routes = Routes;
-//# sourceMappingURL=user-routes.js.map
+//# sourceMappingURL=routes.js.map

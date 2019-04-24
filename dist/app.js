@@ -3,11 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var express = require("express");
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
-var user_routes_1 = require("./routes/user-routes");
+var routes_1 = require("./routes/routes");
 var db_url_1 = require("./shared/db-url");
 var App = /** @class */ (function () {
     function App() {
-        this.routePrv = new user_routes_1.Routes();
+        this.routePrv = new routes_1.Routes();
         this.app = express();
         this.config();
         this.routePrv.routes(this.app);
@@ -17,7 +17,7 @@ var App = /** @class */ (function () {
         mongoose.Promise = global.Promise;
         mongoose
             .connect(db_url_1.mongoUrl, { useNewUrlParser: true })
-            .then(function () { return console.log("Connected to DB."); })
+            .then(function () { return console.log("Connected to MongoDB."); })
             .catch(function (err) {
             throw err;
         });

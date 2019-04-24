@@ -2,6 +2,7 @@ import * as mongoose from "mongoose";
 import { Request, Response } from "express";
 
 import { UserSchema } from "../models/user-data-model";
+import { UpdateUser } from "../shared/contracts";
 
 const User = mongoose.model("users", UserSchema);
 
@@ -16,7 +17,7 @@ export class UsersController {
   }
 
   public getUserById(req: Request, res: Response): void {
-    User.find({_id: req.params.userId}, (err, user) => {
+    User.find({ _id: req.params.userId }, (err, user) => {
       if (err) {
         res.send(err);
       }
@@ -35,32 +36,35 @@ export class UsersController {
     });
   }
 
-  public async deleteUser(req: Request, res: Response): Promise<void> {
+  public deleteUser(req: Request, res: Response): void {
     User.remove({ _id: req.params.userId }, (err, user) => {
-      console.log(req.params.userId);
       if (err) {
         res.send(err);
       }
-      console.log(user);
       res.json({ message: "Successfully deleted user!" });
     });
   }
 
-  //   public updateUser(req: Request, res: Response): void {
-  //     const { index, done }: Update = req.query;
-  //     let doneParam;
-  //     if (done === "true") {
-  //       doneParam = true;
-  //     } else if (done === "false") {
-  //       doneParam = false;
-  //     } else {
-  //       doneParam = "";
-  //     }
-  //     User.findOneAndUpdate({ index: index }, { $set: { done: doneParam } }, { new: true }, (err, task) => {
-  //       if (err) {
-  //         res.send(err);
-  //       }
-  //       res.json(task);
-  //     });
-  //   }
+  public updateUser(req: Request, res: Response): void {
+    const { _id, login, password, role, userName }: UpdateUser = req.query;
+    User.findOneAndUpdate(
+      { _id: _id },
+      {
+        $set: {
+          _id: _id,
+          login: login,
+          password: password,
+          role: role,
+          userName: userName
+        }
+      },
+      { new: true },
+      (err, task) => {
+        if (err) {
+          res.send(err);
+        }
+        res.json(task);
+      }
+    );
+  }
 }

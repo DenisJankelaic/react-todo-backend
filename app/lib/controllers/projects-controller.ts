@@ -1,6 +1,7 @@
 import * as mongoose from "mongoose";
 import { Request, Response } from "express";
 import { ProjectSchema } from "../models/project-data-model";
+import { UpdateProject } from "../shared/contracts";
 
 const Project = mongoose.model("projects", ProjectSchema);
 
@@ -24,8 +25,9 @@ export class ProjectsController {
   }
 
   public addNewProject(req: Request, res: Response): void {
+    console.log(req.body);
     const newProject = new Project(req.body);
-    console.log(newProject);
+
     newProject.save((err, project) => {
       if (err) {
         res.send(err);
@@ -34,32 +36,28 @@ export class ProjectsController {
     });
   }
 
-  public async deleteProject(req: Request, res: Response): Promise<void> {
-    Project.remove({ _id: req.params.ProjectId }, (err, project) => {
-      console.log(req.params.ProjectId);
+  public deleteProject(req: Request, res: Response): void {
+    Project.remove({ _id: req.params.projectId }, (err, project) => {
       if (err) {
         res.send(err);
       }
-      console.log(project);
       res.json({ message: "Successfully deleted Project!" });
     });
   }
 
-  //   public updateProject(req: Request, res: Response): void {
-  //     const { index, done }: Update = req.query;
-  //     let doneParam;
-  //     if (done === "true") {
-  //       doneParam = true;
-  //     } else if (done === "false") {
-  //       doneParam = false;
-  //     } else {
-  //       doneParam = "";
-  //     }
-  //     Project.findOneAndUpdate({ index: index }, { $set: { done: doneParam } }, { new: true }, (err, task) => {
-  //       if (err) {
-  //         res.send(err);
-  //       }
-  //       res.json(task);
-  //     });
-  //   }
+  public updateProject(req: Request, res: Response): void {
+    const { _id, projectName }: UpdateProject = req.body;
+
+    Project.findOneAndUpdate(
+      { _id: _id },
+      { $set: { projectName: projectName } },
+      { new: true },
+      (err, project) => {
+        if (err) {
+          res.send(err);
+        }
+        res.json(project);
+      }
+    );
+  }
 }
