@@ -41,20 +41,19 @@ var UsersController = /** @class */ (function () {
         });
     };
     UsersController.prototype.updateUser = function (req, res) {
-        var _a = req.query, _id = _a._id, login = _a.login, password = _a.password, role = _a.role, userName = _a.userName;
+        var _a = req.body, _id = _a._id, login = _a.login, password = _a.password, role = _a.role, userName = _a.userName;
         User.findOneAndUpdate({ _id: _id }, {
             $set: {
-                _id: _id,
                 login: login,
                 password: password,
                 role: role,
                 userName: userName
             }
-        }, { new: true }, function (err, task) {
+        }, { new: true }, function (err, user) {
             if (err) {
                 res.send(err);
             }
-            res.json(task);
+            res.json(user);
         });
     };
     return UsersController;

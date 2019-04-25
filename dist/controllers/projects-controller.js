@@ -41,8 +41,14 @@ var ProjectsController = /** @class */ (function () {
         });
     };
     ProjectsController.prototype.updateProject = function (req, res) {
-        var _a = req.body, _id = _a._id, projectName = _a.projectName;
-        Project.findOneAndUpdate({ _id: _id }, { $set: { projectName: projectName } }, { new: true }, function (err, project) {
+        var newlyUpdatedProject = req.body;
+        console.log(newlyUpdatedProject);
+        Project.findOneAndUpdate({ _id: newlyUpdatedProject._id }, {
+            $set: {
+                projectName: newlyUpdatedProject.projectName,
+                users: newlyUpdatedProject.users
+            }
+        }, { new: true }, function (err, project) {
             if (err) {
                 res.send(err);
             }

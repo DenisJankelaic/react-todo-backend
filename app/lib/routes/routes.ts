@@ -11,6 +11,7 @@ export class Routes {
     //USERS
     app.route("/users").get(this.usersController.getUsers);
     app.route("/user").post(this.usersController.addNewUser);
+    app.route("/user/update").put(this.usersController.updateUser);
     app
       .route("/user/:userId")
       .delete(this.usersController.deleteUser)

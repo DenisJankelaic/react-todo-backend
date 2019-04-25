@@ -46,11 +46,16 @@ export class ProjectsController {
   }
 
   public updateProject(req: Request, res: Response): void {
-    const { _id, projectName }: UpdateProject = req.body;
-
+    const newlyUpdatedProject: UpdateProject = req.body;
+    
     Project.findOneAndUpdate(
-      { _id: _id },
-      { $set: { projectName: projectName } },
+      { _id: newlyUpdatedProject._id },
+      {
+        $set: {
+          projectName: newlyUpdatedProject.projectName,
+          users: newlyUpdatedProject.users
+        }
+      },
       { new: true },
       (err, project) => {
         if (err) {

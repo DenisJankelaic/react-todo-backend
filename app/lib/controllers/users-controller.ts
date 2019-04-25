@@ -46,12 +46,11 @@ export class UsersController {
   }
 
   public updateUser(req: Request, res: Response): void {
-    const { _id, login, password, role, userName }: UpdateUser = req.query;
+    const { _id, login, password, role, userName }: UpdateUser = req.body;
     User.findOneAndUpdate(
       { _id: _id },
       {
         $set: {
-          _id: _id,
           login: login,
           password: password,
           role: role,
@@ -59,11 +58,11 @@ export class UsersController {
         }
       },
       { new: true },
-      (err, task) => {
+      (err, user) => {
         if (err) {
           res.send(err);
         }
-        res.json(task);
+        res.json(user);
       }
     );
   }
