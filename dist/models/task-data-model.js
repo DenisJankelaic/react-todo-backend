@@ -21,7 +21,7 @@ exports.TaskSchema = new Schema({
     taskName: {
         type: String
     },
-    project: {
+    projectId: {
         type: String
     },
     taskStatus: {
@@ -34,4 +34,4 @@ exports.TaskSchema = new Schema({
         type: Array()
     }
 });
-//# sourceMappingURL=task-data-modell.js.map
+//# sourceMappingURL=task-data-model.js.map

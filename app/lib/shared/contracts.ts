@@ -11,3 +11,16 @@ export interface UpdateProject {
   projectName: string;
   users: string[];
 }
+
+export interface UpdateTask {
+  _id: string;
+  userId: string;
+  description: string;
+  startDate: string;
+  endDate: string;
+  taskName: string;
+  project: string;
+  taskStatus: string;
+  isCurrent: boolean;
+  startStopHistory: string[];
+}

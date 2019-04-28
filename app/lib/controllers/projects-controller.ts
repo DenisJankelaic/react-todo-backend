@@ -2,8 +2,10 @@ import * as mongoose from "mongoose";
 import { Request, Response } from "express";
 import { ProjectSchema } from "../models/project-data-model";
 import { UpdateProject } from "../shared/contracts";
+import { TaskSchema } from "../models/task-data-model";
 
 const Project = mongoose.model("projects", ProjectSchema);
+const Task = mongoose.model("tasks", TaskSchema);
 
 export class ProjectsController {
   public getProjects(req: Request, res: Response): void {
@@ -31,8 +33,9 @@ export class ProjectsController {
     newProject.save((err, project) => {
       if (err) {
         res.send(err);
+      } else {
+        res.json(project);
       }
-      res.json(project);
     });
   }
 
@@ -40,14 +43,21 @@ export class ProjectsController {
     Project.remove({ _id: req.params.projectId }, (err, project) => {
       if (err) {
         res.send(err);
+      } else {
+        Task.remove({ projectId: req.params.projectId }, (err, task) => {
+          if (err) {
+            res.send(err);
+          } else {
+            res.status(200).json({ message: "Task deleted" });
+          }
+        });
       }
-      res.json({ message: "Successfully deleted Project!" });
     });
   }
 
   public updateProject(req: Request, res: Response): void {
     const newlyUpdatedProject: UpdateProject = req.body;
-    
+
     Project.findOneAndUpdate(
       { _id: newlyUpdatedProject._id },
       {

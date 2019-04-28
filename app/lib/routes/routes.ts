@@ -2,10 +2,12 @@ import { Request, Response } from "express";
 
 import { UsersController } from "../controllers/users-controller";
 import { ProjectsController } from "../controllers/projects-controller";
+import { TasksController } from "../controllers/task-controller";
 
 export class Routes {
   public usersController: UsersController = new UsersController();
   public projectsController: ProjectsController = new ProjectsController();
+  public tasksController: TasksController = new TasksController();
 
   public routes(app): void {
     //USERS
@@ -73,6 +75,42 @@ export class Routes {
     // project
     app
       .route("/projects")
+      // GET endpoint
+      .get((req: Request, res: Response) => {
+        // Get all projects
+        res.status(200).send({
+          message: "GET request successfulll"
+        });
+      })
+      .delete((req: Request, res: Response) => {
+        // Delete a PROJECT
+        res.status(200).send({
+          message: "DELETE request successfulll"
+        });
+      });
+
+    //TASKS
+    app.route("/task").post(this.tasksController.addNewTask);
+    app.route("/tasks/:userId").get(this.tasksController.getTasks);
+    app.route("/tasks/update").put(this.tasksController.updateAllTask);
+    app.route("/task/update").put(this.tasksController.updateTask);
+    app.route("/task/delete/:taskId").delete(this.tasksController.deleteTask);
+    app
+      .route("/")
+      .get((req: Request, res: Response) => {
+        res.status(200).send({
+          message: "GET request successfulll"
+        });
+      })
+      // POST endpoint
+      .post((req: Request, res: Response) => {
+        // Create new project
+        res.status(200).send({
+          message: "POST request successfulll"
+        });
+      });
+      app
+      .route("/task")
       // GET endpoint
       .get((req: Request, res: Response) => {
         // Get all projects
