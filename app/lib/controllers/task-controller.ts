@@ -64,26 +64,6 @@ export class TasksController {
     );
   }
 
-  public updateAllTask(req: Request, res: Response): void {
-    const newTaskList = req.body;
-    newTaskList.forEach(task => {
-      Task.findOneAndUpdate(
-        { _id: task._id },
-        {
-          $set: {
-            isCurrent: task.isCurrent
-          }
-        },
-        (err, task) => {
-          if (err) {
-            res.send(err);
-          }
-          res.json(task);
-        }
-      );
-    });
-  }
-
   public deleteTask(req: Request, res: Response): void {
     Task.remove({ _id: req.params.taskId }, (err, task) => {
       if (err) {

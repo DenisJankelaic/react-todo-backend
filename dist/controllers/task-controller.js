@@ -44,21 +44,6 @@ var TasksController = /** @class */ (function () {
             res.json(task);
         });
     };
-    TasksController.prototype.updateAllTask = function (req, res) {
-        var newTaskList = req.body;
-        newTaskList.forEach(function (task) {
-            Task.findOneAndUpdate({ _id: task._id }, {
-                $set: {
-                    isCurrent: task.isCurrent
-                }
-            }, function (err, task) {
-                if (err) {
-                    res.send(err);
-                }
-                res.json(task);
-            });
-        });
-    };
     TasksController.prototype.deleteTask = function (req, res) {
         Task.remove({ _id: req.params.taskId }, function (err, task) {
             if (err) {
