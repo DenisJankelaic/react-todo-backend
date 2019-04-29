@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var express = require("express");
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
+var cors = require("cors");
 var routes_1 = require("./routes/routes");
 var db_url_1 = require("./shared/db-url");
 var App = /** @class */ (function () {
@@ -23,6 +24,7 @@ var App = /** @class */ (function () {
         });
     };
     App.prototype.config = function () {
+        this.app.use(cors());
         this.app.use(bodyParser.json());
         this.app.use(bodyParser.urlencoded({ extended: false }));
     };

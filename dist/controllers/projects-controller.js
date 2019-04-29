@@ -13,7 +13,9 @@ var ProjectsController = /** @class */ (function () {
             if (err) {
                 res.send(err);
             }
-            res.json(project);
+            else {
+                res.json(project);
+            }
         });
     };
     ProjectsController.prototype.getProjectById = function (req, res) {
@@ -21,7 +23,9 @@ var ProjectsController = /** @class */ (function () {
             if (err) {
                 res.send(err);
             }
-            res.json(project);
+            else {
+                res.json(project);
+            }
         });
     };
     ProjectsController.prototype.addNewProject = function (req, res) {
@@ -64,7 +68,9 @@ var ProjectsController = /** @class */ (function () {
             if (err) {
                 res.send(err);
             }
-            res.json(project);
+            else {
+                res.json(project);
+            }
         });
     };
     return ProjectsController;

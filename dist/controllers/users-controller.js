@@ -11,7 +11,9 @@ var UsersController = /** @class */ (function () {
             if (err) {
                 res.send(err);
             }
-            res.json(user);
+            else {
+                res.json(user);
+            }
         });
     };
     UsersController.prototype.getUserById = function (req, res) {
@@ -19,7 +21,9 @@ var UsersController = /** @class */ (function () {
             if (err) {
                 res.send(err);
             }
-            res.json(user);
+            else {
+                res.json(user);
+            }
         });
     };
     UsersController.prototype.addNewUser = function (req, res) {
@@ -29,7 +33,9 @@ var UsersController = /** @class */ (function () {
             if (err) {
                 res.send(err);
             }
-            res.json(user);
+            else {
+                res.json(user);
+            }
         });
     };
     UsersController.prototype.deleteUser = function (req, res) {
@@ -37,7 +43,9 @@ var UsersController = /** @class */ (function () {
             if (err) {
                 res.send(err);
             }
-            res.json({ message: "Successfully deleted user!" });
+            else {
+                res.json({ message: "Successfully deleted user!" });
+            }
         });
     };
     UsersController.prototype.updateUser = function (req, res) {
@@ -53,7 +61,9 @@ var UsersController = /** @class */ (function () {
             if (err) {
                 res.send(err);
             }
-            res.json(user);
+            else {
+                res.json(user);
+            }
         });
     };
     return UsersController;

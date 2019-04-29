@@ -91,6 +91,7 @@ export class Routes {
 
     //TASKS
     app.route("/task").post(this.tasksController.addNewTask);
+    app.route("/tasks/updateAll").put(this.tasksController.updateAllTasks);
     app.route("/tasks/:userId").get(this.tasksController.getTasks);
     app.route("/task/update").put(this.tasksController.updateTask);
     app.route("/task/delete/:taskId").delete(this.tasksController.deleteTask);
@@ -103,22 +104,22 @@ export class Routes {
       })
       // POST endpoint
       .post((req: Request, res: Response) => {
-        // Create new project
+        // Create new task
         res.status(200).send({
           message: "POST request successfulll"
         });
       });
-      app
+    app
       .route("/task")
       // GET endpoint
       .get((req: Request, res: Response) => {
-        // Get all projects
+        // Get all task
         res.status(200).send({
           message: "GET request successfulll"
         });
       })
       .delete((req: Request, res: Response) => {
-        // Delete a PROJECT
+        // Delete a task
         res.status(200).send({
           message: "DELETE request successfulll"
         });

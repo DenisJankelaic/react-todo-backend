@@ -24,3 +24,8 @@ export interface UpdateTask {
   isCurrent: boolean;
   startStopHistory: string[];
 }
+
+export interface UpdateTaskList {
+  userId: string;
+  taskId: string;
+}

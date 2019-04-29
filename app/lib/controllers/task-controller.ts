@@ -2,7 +2,7 @@ import * as mongoose from "mongoose";
 import { Request, Response } from "express";
 
 import { TaskSchema } from "../models/task-data-model";
-import { UpdateTask } from "../shared/contracts";
+import { UpdateTask, UpdateTaskList } from "../shared/contracts";
 
 const Task = mongoose.model("tasks", TaskSchema);
 
@@ -11,8 +11,9 @@ export class TasksController {
     Task.find({ userId: req.params.userId }, (err, user) => {
       if (err) {
         res.send(err);
+      } else {
+        res.json(user);
       }
-      res.json(user);
     });
   }
 
@@ -21,8 +22,9 @@ export class TasksController {
     newTask.save((err, task) => {
       if (err) {
         res.send(err);
+      } else {
+        res.json(task);
       }
-      res.json(task);
     });
   }
 
@@ -58,8 +60,9 @@ export class TasksController {
       (err, task) => {
         if (err) {
           res.send(err);
+        } else {
+          res.json(task);
         }
-        res.json(task);
       }
     );
   }
@@ -68,8 +71,30 @@ export class TasksController {
     Task.remove({ _id: req.params.taskId }, (err, task) => {
       if (err) {
         res.send(err);
+      } else {
+        res.json({ message: "Successfully deleted Task!" });
       }
-      res.json({ message: "Successfully deleted Task!" });
     });
+  }
+
+  public async updateAllTasks(req: Request, res: Response): Promise<void> {
+    const { userId, taskId }: UpdateTaskList = req.query;
+    console.log(userId, taskId);
+
+    Task.find(
+      { userId: userId},
+      {
+        $set: {
+          isCurrent: false
+        }
+      },
+      (err, task) => {
+        if (err) {
+          res.send(err);
+        } else {
+          res.json(task);
+        }
+      }
+    );
   }
 }

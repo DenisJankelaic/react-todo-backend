@@ -11,8 +11,9 @@ export class UsersController {
     User.find({}, (err, user) => {
       if (err) {
         res.send(err);
+      } else {
+        res.json(user);
       }
-      res.json(user);
     });
   }
 
@@ -20,8 +21,9 @@ export class UsersController {
     User.find({ _id: req.params.userId }, (err, user) => {
       if (err) {
         res.send(err);
+      } else {
+        res.json(user);
       }
-      res.json(user);
     });
   }
 
@@ -31,8 +33,9 @@ export class UsersController {
     newUser.save((err, user) => {
       if (err) {
         res.send(err);
+      } else {
+        res.json(user);
       }
-      res.json(user);
     });
   }
 
@@ -40,8 +43,9 @@ export class UsersController {
     User.remove({ _id: req.params.userId }, (err, user) => {
       if (err) {
         res.send(err);
+      } else {
+        res.json({ message: "Successfully deleted user!" });
       }
-      res.json({ message: "Successfully deleted user!" });
     });
   }
 
@@ -61,8 +65,9 @@ export class UsersController {
       (err, user) => {
         if (err) {
           res.send(err);
+        } else {
+          res.json(user);
         }
-        res.json(user);
       }
     );
   }

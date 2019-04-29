@@ -88,6 +88,7 @@ var Routes = /** @class */ (function () {
         });
         //TASKS
         app.route("/task").post(this.tasksController.addNewTask);
+        app.route("/tasks/updateAll").put(this.tasksController.updateAllTasks);
         app.route("/tasks/:userId").get(this.tasksController.getTasks);
         app.route("/task/update").put(this.tasksController.updateTask);
         app.route("/task/delete/:taskId").delete(this.tasksController.deleteTask);
@@ -100,7 +101,7 @@ var Routes = /** @class */ (function () {
         })
             // POST endpoint
             .post(function (req, res) {
-            // Create new project
+            // Create new task
             res.status(200).send({
                 message: "POST request successfulll"
             });
@@ -109,13 +110,13 @@ var Routes = /** @class */ (function () {
             .route("/task")
             // GET endpoint
             .get(function (req, res) {
-            // Get all projects
+            // Get all task
             res.status(200).send({
                 message: "GET request successfulll"
             });
         })
             .delete(function (req, res) {
-            // Delete a PROJECT
+            // Delete a task
             res.status(200).send({
                 message: "DELETE request successfulll"
             });

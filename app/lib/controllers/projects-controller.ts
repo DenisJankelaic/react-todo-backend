@@ -12,8 +12,9 @@ export class ProjectsController {
     Project.find({}, (err, project) => {
       if (err) {
         res.send(err);
+      } else {
+        res.json(project);
       }
-      res.json(project);
     });
   }
 
@@ -21,8 +22,9 @@ export class ProjectsController {
     Project.find({ _id: req.params.projectId }, (err, project) => {
       if (err) {
         res.send(err);
+      } else {
+        res.json(project);
       }
-      res.json(project);
     });
   }
 
@@ -70,8 +72,9 @@ export class ProjectsController {
       (err, project) => {
         if (err) {
           res.send(err);
+        } else {
+          res.json(project);
         }
-        res.json(project);
       }
     );
   }
