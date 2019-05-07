@@ -4,16 +4,19 @@ var mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 exports.TaskSchema = new Schema({
     userId: {
-        type: String
+        type: String,
+        required: true
     },
     description: {
         type: String
     },
     _id: {
-        type: String
+        type: String,
+        required: true
     },
     startDate: {
-        type: String
+        type: String,
+        required: true
     },
     endDate: {
         type: String
@@ -22,16 +25,19 @@ exports.TaskSchema = new Schema({
         type: String
     },
     projectId: {
-        type: String
+        type: String,
+        required: true
     },
     taskStatus: {
-        type: String
+        type: String,
+        required: true
     },
     isCurrent: {
         type: Boolean
     },
     startStopHistory: {
-        type: Array()
+        type: Array(),
+        required: true
     }
 });
 //# sourceMappingURL=task-data-model.js.map

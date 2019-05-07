@@ -4,10 +4,12 @@ const Schema = mongoose.Schema;
 
 export const ProjectSchema = new Schema({
   _id: {
-    type: String
+    type: String,
+    required: true
   },
   projectName: {
-    type: String
+    type: String,
+    required: true
   },
   users: {
     type: Array<String>()

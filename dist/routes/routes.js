@@ -3,11 +3,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var users_controller_1 = require("../controllers/users-controller");
 var projects_controller_1 = require("../controllers/projects-controller");
 var task_controller_1 = require("../controllers/task-controller");
+var authentication_controller_1 = require("../controllers/authentication-controller");
 var Routes = /** @class */ (function () {
     function Routes() {
         this.usersController = new users_controller_1.UsersController();
         this.projectsController = new projects_controller_1.ProjectsController();
         this.tasksController = new task_controller_1.TasksController();
+        this.authenticationController = new authentication_controller_1.AuthenticationController();
     }
     Routes.prototype.routes = function (app) {
         //USERS
@@ -119,6 +121,17 @@ var Routes = /** @class */ (function () {
             // Delete a task
             res.status(200).send({
                 message: "DELETE request successfulll"
+            });
+        });
+        //Authentication
+        app.route("/login").post(this.authenticationController.loggingIn);
+        app
+            .route("/login")
+            // POST endpoint
+            .post(function (req, res) {
+            // Create new task
+            res.status(200).send({
+                message: "POST request successfulll"
             });
         });
     };

@@ -1,20 +1,22 @@
 import * as mongoose from "mongoose";
-import { ProjectSchema } from "./project-data-model";
 
 const Schema = mongoose.Schema;
 
 export const TaskSchema = new Schema({
   userId: {
-    type: String
+    type: String,
+    required: true
   },
   description: {
     type: String
   },
   _id: {
-    type: String
+    type: String,
+    required: true
   },
   startDate: {
-    type: String
+    type: String,
+    required: true
   },
   endDate: {
     type: String
@@ -23,15 +25,18 @@ export const TaskSchema = new Schema({
     type: String
   },
   projectId: {
-    type: String
+    type: String,
+    required: true
   },
   taskStatus: {
-    type: String
+    type: String,
+    required: true
   },
   isCurrent: {
     type: Boolean
   },
   startStopHistory: {
-    type: Array<String>()
+    type: Array<String>(),
+    required: true
   }
 });

@@ -35,86 +35,61 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var mongoose = require("mongoose");
 var bcrypt = require("bcrypt");
+var jwt = require("jsonwebtoken");
+var mongoose = require("mongoose");
 var user_data_model_1 = require("../models/user-data-model");
 var User = mongoose.model("users", user_data_model_1.UserSchema);
-var UsersController = /** @class */ (function () {
-    function UsersController() {
-    }
-    UsersController.prototype.getUsers = function (req, res) {
-        User.find({}, function (err, user) {
-            if (err) {
-                res.send(err);
-            }
-            else {
-                res.json(user);
-            }
-        });
-    };
-    UsersController.prototype.getUserById = function (req, res) {
-        User.find({ _id: req.params.userId }, function (err, user) {
-            if (err) {
-                res.send(err);
-            }
-            else {
-                res.json(user);
-            }
-        });
-    };
-    UsersController.prototype.addNewUser = function (req, res) {
-        return __awaiter(this, void 0, void 0, function () {
-            var bodyParams, hashedPassword;
+var config = require("../shared/config").get(process.env.NODE_ENV);
+var AuthenticationController = /** @class */ (function () {
+    function AuthenticationController() {
+        var _this = this;
+        this.loggingIn = function (request, response) { return __awaiter(_this, void 0, void 0, function () {
+            var logInData, user, isPasswordMatching, tokenData;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
-                        bodyParams = new User(req.body);
-                        return [4 /*yield*/, bcrypt.hash(bodyParams.password, 10)];
+                        logInData = request.body;
+                        return [4 /*yield*/, User.findOne({ login: logInData.login })];
                     case 1:
-                        hashedPassword = _a.sent();
-                        bodyParams.password = hashedPassword;
-                        bodyParams.save(function (err, user) {
-                            if (err) {
-                                res.send(err);
-                            }
-                            else {
-                                res.json(user);
-                            }
-                        });
-                        return [2 /*return*/];
+                        user = _a.sent();
+                        if (!user) return [3 /*break*/, 3];
+                        return [4 /*yield*/, bcrypt.compare(logInData.password, user.password)];
+                    case 2:
+                        isPasswordMatching = _a.sent();
+                        if (isPasswordMatching) {
+                            tokenData = this.createToken(user);
+                            response.setHeader("Set-Cookie", [this.createCookie(tokenData)]);
+                            response.status(200).json(tokenData);
+                        }
+                        else {
+                            response.status(404).json({ message: "Wrong password" });
+                        }
+                        return [3 /*break*/, 4];
+                    case 3:
+                        response.status(404).json({ message: "User not found" });
+                        _a.label = 4;
+                    case 4: return [2 /*return*/];
                 }
             });
-        });
+        }); };
+    }
+    AuthenticationController.prototype.createToken = function (user) {
+        var expiresIn = 60 * 60; // an hour
+        var secret = config.SECRET;
+        var dataStoredInToken = {
+            _id: user._id
+        };
+        return {
+            expiresIn: expiresIn,
+            token: jwt.sign(dataStoredInToken, secret, { expiresIn: expiresIn }),
+            userId: user._id
+        };
     };
-    UsersController.prototype.deleteUser = function (req, res) {
-        User.remove({ _id: req.params.userId }, function (err, user) {
-            if (err) {
-                res.send(err);
-            }
-            else {
-                res.json({ message: "Successfully deleted user!" });
-            }
-        });
+    AuthenticationController.prototype.createCookie = function (tokenData) {
+        return "Authorization=" + tokenData.token + "; HttpOnly; Max-Age=" + tokenData.expiresIn;
     };
-    UsersController.prototype.updateUser = function (req, res) {
-        var _a = req.body, _id = _a._id, login = _a.login, password = _a.password, role = _a.role, userName = _a.userName;
-        User.findOneAndUpdate({ _id: _id }, {
-            $set: {
-                login: login,
-                password: password,
-                role: role,
-                userName: userName
-            }
-        }, { new: true }, function (err, user) {
-            if (err) {
-                res.send(err);
-            }
-            else {
-                res.json(user);
-            }
-        });
-    };
-    return UsersController;
+    return AuthenticationController;
 }());
-exports.UsersController = UsersController;
-//# sourceMappingURL=users-controller.js.map
+exports.AuthenticationController = AuthenticationController;
+//# sourceMappingURL=authentication-controller.js.map

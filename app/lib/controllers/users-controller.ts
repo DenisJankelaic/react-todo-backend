@@ -1,4 +1,5 @@
 import * as mongoose from "mongoose";
+import * as bcrypt from "bcrypt";
 import { Request, Response } from "express";
 
 import { UserSchema } from "../models/user-data-model";
@@ -27,10 +28,11 @@ export class UsersController {
     });
   }
 
-  public addNewUser(req: Request, res: Response): void {
-    const newUser = new User(req.body);
-    console.log(newUser);
-    newUser.save((err, user) => {
+  public async addNewUser(req: Request, res: Response): Promise<void> {
+    const bodyParams = new User(req.body);
+    const hashedPassword = await bcrypt.hash(bodyParams.password, 10);
+    bodyParams.password = hashedPassword;
+    bodyParams.save((err, user) => {
       if (err) {
         res.send(err);
       } else {

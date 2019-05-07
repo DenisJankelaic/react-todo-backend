@@ -3,11 +3,13 @@ import { Request, Response } from "express";
 import { UsersController } from "../controllers/users-controller";
 import { ProjectsController } from "../controllers/projects-controller";
 import { TasksController } from "../controllers/task-controller";
+import { AuthenticationController } from "../controllers/authentication-controller";
 
 export class Routes {
   public usersController: UsersController = new UsersController();
   public projectsController: ProjectsController = new ProjectsController();
   public tasksController: TasksController = new TasksController();
+  public authenticationController: AuthenticationController = new AuthenticationController();
 
   public routes(app): void {
     //USERS
@@ -122,6 +124,18 @@ export class Routes {
         // Delete a task
         res.status(200).send({
           message: "DELETE request successfulll"
+        });
+      });
+
+    //Authentication
+    app.route("/login").post(this.authenticationController.loggingIn);
+    app
+      .route("/login")
+      // POST endpoint
+      .post((req: Request, res: Response) => {
+        // Create new task
+        res.status(200).send({
+          message: "POST request successfulll"
         });
       });
   }
