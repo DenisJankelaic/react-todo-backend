@@ -4,8 +4,12 @@ import { Request, Response } from "express";
 
 import { UserSchema } from "../models/user-data-model";
 import { UpdateUser } from "../shared/contracts";
+import { TaskSchema } from "../models/task-data-model";
+import { ProjectSchema } from "../models/project-data-model";
 
 const User = mongoose.model("users", UserSchema);
+const Task = mongoose.model("tasks", TaskSchema);
+const Project = mongoose.model("projects", ProjectSchema);
 
 export class UsersController {
   public getUsers(req: Request, res: Response): void {
@@ -44,22 +48,29 @@ export class UsersController {
   public deleteUser(req: Request, res: Response): void {
     User.remove({ _id: req.params.userId }, (err, user) => {
       if (err) {
-        res.send(err);
+        res.status(404).send(err);
       } else {
-        res.json({ message: "Successfully deleted user!" });
+        Task.remove({ userId: req.params.userId }, (err, task) => {
+          if (err) {
+            res.send(err);
+          } else {
+            res.status(200).json({ message: "Task deleted" });
+          }
+        });
       }
     });
   }
 
-  public updateUser(req: Request, res: Response): void {
+  public async updateUser(req: Request, res: Response): Promise<void> {
     const { _id, login, password, role, userName }: UpdateUser = req.body;
+    const hashedPassword = await bcrypt.hash(password, 10);
     User.findOneAndUpdate(
       { _id: _id },
       {
         $set: {
           login: login,
-          password: password,
           role: role,
+          password: hashedPassword,
           userName: userName
         }
       },

@@ -38,7 +38,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var mongoose = require("mongoose");
 var bcrypt = require("bcrypt");
 var user_data_model_1 = require("../models/user-data-model");
+var task_data_model_1 = require("../models/task-data-model");
 var User = mongoose.model("users", user_data_model_1.UserSchema);
+var Task = mongoose.model("tasks", task_data_model_1.TaskSchema);
 var UsersController = /** @class */ (function () {
     function UsersController() {
     }
@@ -92,26 +94,45 @@ var UsersController = /** @class */ (function () {
                 res.send(err);
             }
             else {
-                res.json({ message: "Successfully deleted user!" });
+                Task.remove({ userId: req.params.userId }, function (err, task) {
+                    if (err) {
+                        res.send(err);
+                    }
+                    else {
+                        res.status(200).json({ message: "Task deleted" });
+                    }
+                });
             }
         });
     };
     UsersController.prototype.updateUser = function (req, res) {
-        var _a = req.body, _id = _a._id, login = _a.login, password = _a.password, role = _a.role, userName = _a.userName;
-        User.findOneAndUpdate({ _id: _id }, {
-            $set: {
-                login: login,
-                password: password,
-                role: role,
-                userName: userName
-            }
-        }, { new: true }, function (err, user) {
-            if (err) {
-                res.send(err);
-            }
-            else {
-                res.json(user);
-            }
+        return __awaiter(this, void 0, void 0, function () {
+            var _a, _id, login, password, role, userName, hashedPassword;
+            return __generator(this, function (_b) {
+                switch (_b.label) {
+                    case 0:
+                        _a = req.body, _id = _a._id, login = _a.login, password = _a.password, role = _a.role, userName = _a.userName;
+                        return [4 /*yield*/, bcrypt.hash(password, 10)];
+                    case 1:
+                        hashedPassword = _b.sent();
+                        User.findOneAndUpdate({ _id: _id }, {
+                            $set: {
+                                login: login,
+                                role: role,
+                                password: hashedPassword,
+                                userName: userName
+                            }
+                        }, { new: true }, function (err, user) {
+                            if (err) {
+                                res.send(err);
+                            }
+                            else {
+                                res.json(user);
+                            }
+                        });
+                        return [2 /*return*/];
+                }
+            });
         });
     };
     return UsersController;
