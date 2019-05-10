@@ -39,8 +39,10 @@ var mongoose = require("mongoose");
 var bcrypt = require("bcrypt");
 var user_data_model_1 = require("../models/user-data-model");
 var task_data_model_1 = require("../models/task-data-model");
+var project_data_model_1 = require("../models/project-data-model");
 var User = mongoose.model("users", user_data_model_1.UserSchema);
 var Task = mongoose.model("tasks", task_data_model_1.TaskSchema);
+var Project = mongoose.model("projects", project_data_model_1.ProjectSchema);
 var UsersController = /** @class */ (function () {
     function UsersController() {
     }
@@ -91,7 +93,7 @@ var UsersController = /** @class */ (function () {
     UsersController.prototype.deleteUser = function (req, res) {
         User.remove({ _id: req.params.userId }, function (err, user) {
             if (err) {
-                res.send(err);
+                res.status(404).send(err);
             }
             else {
                 Task.remove({ userId: req.params.userId }, function (err, task) {
